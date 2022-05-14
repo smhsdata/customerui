@@ -1,0 +1,129 @@
+
+<div class="container-fluid p-3 text-center">
+    <div class="row">
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+    <img class="left" src="/assets/logo.jpg" alt="image">
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+    <header class="right">
+        <h1>Designer Dashboard</h1>
+    </header>
+</div>
+    </div>
+</div>
+<div class="border-thin"></div>
+<div class="container paddingAllLarge">
+    <div class="row justify-content-center">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 paddingAllLarge grey-bg">
+            <form action="add" method="POST" role="form" class="" #selectedData="ngForm" [formGroup]="form" (ngSubmit)="submit(selectedData.value)">
+                <legend class="text-center">Choose Your Design</legend>
+                <div class="form-group p-2">
+                    <label for="layout">Customer ID</label>
+                   <input class="form-control" formControlName="customer_id" [(ngModel)]="custid"  #customerid type="text" 
+                   placeholder="Enter ID" class="form-control" (change)="enablingLayout($event)">
+                   <div *ngIf="formcontrols.customer_id.touched && formcontrols.customer_id.invalid" class="alert alert-danger">
+                        <div  *ngIf="formcontrols.customer_id.errors?.['required']">Customer ID is required.</div>
+                    </div>
+                </div>
+                <div class="form-group p-2">
+                    <label for="layout">Layout</label>
+                    <select  [attr.disabled]="true" [(ngModel)]="layout" class="form-select form-select-lg"  formControlName="layout_selected">
+                        <option *ngFor="let data of layout_data" [value]="data.layoutName">{{ data.layoutName}}</option>
+                    </select>
+                    <div *ngIf="formcontrols.layout_selected.touched && formcontrols.layout_selected.invalid" class="alert alert-danger">
+                        <div  *ngIf="formcontrols.layout_selected.errors?.['required']">Layout is required.</div>
+                    </div>
+                </div>
+                <ng-container *ngIf="layout">
+                <div class="form-group p-2">
+                    <label for="ccm">Cabinet core Material</label>
+                    <select class="form-select form-select-lg"  [(ngModel)]="baseCategory"  formControlName="ccm_selected" (ngModelChange)="selectedValue($event)">
+                        <option *ngFor="let data of ccm_data" [value]="data.ccmName">{{ data.ccmName}}</option>
+                    </select>
+                    <div *ngIf="formcontrols.ccm_selected.touched && formcontrols.ccm_selected.invalid" class="alert alert-danger">
+                        <div  *ngIf="formcontrols.ccm_selected.errors?.['required']">CCM is required.</div>
+                    </div>
+                </div>
+                <div class="form-group p-2">
+                    <label for="scm">Cabinet Sizing</label>
+                    <select class="form-select form-select-lg"  [attr.disabled]="true" [(ngModel)]="size"  formControlName="size_selected">
+                        <option *ngFor="let data of cabinet_sizing" [value]="data.typeSize">{{ data.typeSize}}</option>
+                    </select>
+                    <div *ngIf="formcontrols.size_selected.touched && formcontrols.size_selected.invalid" class="alert alert-danger">
+                        <div  *ngIf="formcontrols.size_selected.errors?.['required']">Size is required.</div>
+                    </div>
+                </div>
+                <div class="form-group p-2">
+                    <label for="scm">Shutter core Material</label>
+                    <select class="form-select form-select-lg" [attr.disabled]="true" [(ngModel)]="scm"  formControlName="scm_selected">
+                        <option *ngFor="let data of scm_data" [value]="data.scmName">{{ data.scmName}}</option>
+                    </select>
+                    <div *ngIf="formcontrols.scm_selected.touched && formcontrols.scm_selected.invalid" class="alert alert-danger">
+                        <div  *ngIf="formcontrols.scm_selected.errors?.['required']">SCM is required.</div>
+                    </div>
+                </div>
+            </ng-container>
+            </form>
+            <ng-container *ngIf="layout">
+                <div class="button-section margin-tb-Large p-2">
+                    <button type="button" class="btn btn-outline-success btn-lg" (click)="add(selectedData.value)">Add</button>
+                    <button type="button" class="btn btn-outline-success btn-lg m-3" (click)="view(customerid.value)">View</button>
+                </div>
+                <div class="button-section margin-tb-Large p-2">
+                    <button type="submit" class="btn btn-success btn-lg" (click)="submit($event)">Submit</button>
+                </div>
+            </ng-container>
+            <div class="row"  *ngIf="showMsg">
+                <div class="col-xs-12">
+                  <p class="alert alert-success">
+                    {{add_form_data.output}}
+                  </p>
+                </div>
+              </div>
+              <div class="row"  *ngIf="showErrMsg">
+                <div class="col-xs-12">
+                  <p class="alert alert-danger">
+                    Please select all the fields.
+                  </p>
+                </div>
+              </div>
+        </div>
+    </div>
+    <ng-container *ngIf="showtable">
+    <div class="row justify-content-center">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 paddingAllLarge grey-bg">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                <tr>
+                  <th scope="col">S.No</th>
+                  <th scope="col">CustomerId</th>
+                  <th scope="col">Layout</th>
+                  <th scope="col">CCM</th>
+                  <th scope="col">Cabinet Size</th>
+                  <th scope="col">SCM</th>
+                  <th scope="col">Remove</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let data of view_form_data , index as i">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>{{data.customerId}}</td>
+                  <td>{{data.layoutSelected}}</td>
+                  <td>{{data.ccmSelected}}</td>
+                  <td>{{data.sizeSelected}}</td>
+                  <td>{{data.scmSelected}}</td>
+                  <td><button class="button_transparent" (click)="delete(data.id)"> delete </button></td>
+                </tr>
+                </tbody>
+              </table>    
+              <div class="row"  *ngIf="showDelMsg">
+                <div class="col-xs-12">
+                  <p class="alert alert-success">
+                    {{delete_form_data.output}}
+                  </p>
+                </div>
+              </div>
+        </div>
+    </div>
+</ng-container> 
+</div>

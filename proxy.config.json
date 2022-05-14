@@ -1,0 +1,15 @@
+{
+    "/api/*": {
+      "target":  {
+        "host": "35.172.58.119",
+        "protocol": "http:",
+        "port": 8010
+      },
+        "secure": false,
+        "changeOrigin": true,
+          "logLevel": "info",
+          "pathRewrite": {
+            "^/api": ""
+        }
+        }
+}

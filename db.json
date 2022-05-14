@@ -1,0 +1,53 @@
+{
+	"categories": [{
+			"id": 1,
+			"base": "Layout"
+		},
+		{
+			"id": 2,
+			"base": "Cabinet core Material"
+		},
+		{
+			"id": 3,
+			"base": "Shutter core Material"
+		},
+		{
+			"id": 4,
+			"base": "Cabinet sizing"
+		}
+	],
+	"getLayout": [{
+			"id": 1,
+			"layoutName": "Kitchen"
+		},
+		{
+			"id": 2,
+			"layoutName": "Bedroom"
+		},
+		{
+			"id": 3,
+			"layoutName": "Living Room"
+		}
+	],
+	"getCCM": [{
+		"id": 1,
+		"ccmName": "MDF"
+	},
+	{
+		"id": 2,
+		"ccmName": "M.R Plywood"
+	},
+	{
+		"id": 3,
+		"ccmName": "B.W.R plywood"
+	},
+	{
+		"id": 4,
+		"ccmName": "B.W.P plywood"
+	},
+	{
+		"id": 5,
+		"ccmName": "HDHMR"
+	}
+]
+}
